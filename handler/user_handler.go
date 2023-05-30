@@ -26,25 +26,34 @@ func Signup(db *gorm.DB) gin.HandlerFunc {
 			return
 		}
 
-		userId, err := uuid.NewUUID()
+		email := user.Email
 
-		if err != nil {
-			c.JSON(http.StatusForbidden, gin.H{
-				"[ERROR]": err.Error(),
-			})
-		}
+		if err := db.Table("USER").Where("EMAIL = ?", email).First(&user).Error; err != nil {
+			userId, err := uuid.NewUUID()
 
-		user.Id = userId.String()
-		user.Password = security.HashAndSalt([]byte(user.Password))
+			if err != nil {
+				c.JSON(http.StatusForbidden, gin.H{
+					"[ERROR]": err.Error(),
+				})
+			}
 
-		if err := db.Table("USER").Create(&user).Error; err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"[ERROR]": err.Error(),
-			})
+			user.Id = userId.String()
+			user.Password = security.HashAndSalt([]byte(user.Password))
+
+			if err := db.Table("USER").Create(&user).Error; err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"[ERROR]": err.Error(),
+				})
+				return
+			}
+
+			c.JSON(http.StatusCreated, gin.H{"data": user})
+
+			return
+		} else {
+			c.JSON(http.StatusFound, gin.H{"data": "user already existed"})
 			return
 		}
-
-		c.JSON(http.StatusOK, gin.H{"data": user})
 	}
 }
 
