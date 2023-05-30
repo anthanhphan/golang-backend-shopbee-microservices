@@ -47,7 +47,7 @@ func Signup(db *gorm.DB) gin.HandlerFunc {
 				return
 			}
 
-			c.JSON(http.StatusCreated, gin.H{"data": user})
+			c.JSON(http.StatusCreated, gin.H{"data": user.Id})
 
 			return
 		} else {
