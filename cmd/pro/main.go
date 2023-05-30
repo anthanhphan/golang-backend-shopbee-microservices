@@ -15,6 +15,8 @@ func init() {
 }
 
 func main() {
+	gin.SetMode(gin.ReleaseMode)
+
 	db := db.ConnectDB(os.Getenv("MYSQL_CONN_PRO"))
 
 	router := gin.Default()
