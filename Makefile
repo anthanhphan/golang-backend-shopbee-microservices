@@ -3,4 +3,7 @@ install:
 	@go install
 
 dev:
-	@go run main.go
+	@cd cmd/dev;go run main.go
+
+pro:
+	@cd cmd/pro;go run main.go

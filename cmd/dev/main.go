@@ -15,7 +15,7 @@ func init() {
 }
 
 func main() {
-	db := db.ConnectDB(os.Getenv("MYSQL_CONN"))
+	db := db.ConnectDB(os.Getenv("MYSQL_CONN_DEV"))
 
 	router := gin.Default()
 
@@ -29,7 +29,7 @@ func main() {
 }
 
 func LoadEnv() {
-	err := godotenv.Load("local.env")
+	err := godotenv.Load("../../local.env")
 	if err != nil {
 		log.Fatalf("[ERROR] %s", err)
 	}
