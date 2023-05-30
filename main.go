@@ -1,12 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"shopbee/db"
 	"shopbee/handler"
-	"shopbee/model"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -17,13 +15,7 @@ func init() {
 }
 
 func main() {
-	user := model.User{}
-
-	fmt.Print(user)
-
 	db := db.ConnectDB(os.Getenv("MYSQL_CONN"))
-
-	fmt.Print(db)
 
 	router := gin.Default()
 
