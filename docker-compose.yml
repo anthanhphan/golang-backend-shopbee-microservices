@@ -2,10 +2,10 @@ version: '2'
 
 services:
   web-service:
-    container_name: web-service
+    container_name: shopbee-api
     build: .
-    image: web-service:1.0
+    image: shopbee-api:1.0
     ports:
       - "3000:3000"
     environment:
-      - APP_NAME=github
+      - APP_NAME=backend-shopbee-api

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"shopbee/db"
@@ -12,6 +13,8 @@ import (
 
 func init() {
 	LoadEnv()
+
+	fmt.Println(">>> " + os.Getenv("APP_NAME"))
 }
 
 func main() {
