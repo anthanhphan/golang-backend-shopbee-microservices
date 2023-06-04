@@ -11,3 +11,6 @@ pro:
 docker-run:
 	@docker rmi -f shopbee-api:1.0
 	@docker-compose up
+
+ssh-ubuntu:
+	ssh -i ubuntu-server.pem ptan21@4.193.147.16
