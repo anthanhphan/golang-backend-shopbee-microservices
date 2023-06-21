@@ -8,15 +8,13 @@ ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
-WORKDIR $GOPATH/src/backend-shopbee
+WORKDIR $GOPATH/src/authentication
 
 COPY . .
 
-# RUN go mod init shopbee
-
-WORKDIR $GOPATH/src/backend-shopbee/cmd/pro
+WORKDIR $GOPATH/src/authentication/cmd
 RUN GOOS=linux go build -o app
 
 ENTRYPOINT ["./app"]
 
-EXPOSE 3000
+EXPOSE 3056
