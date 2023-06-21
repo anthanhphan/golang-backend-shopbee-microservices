@@ -6,4 +6,4 @@ services:
     image: api-gateway:0.0.1
     tty: true
     ports:
-      - '80:80'
+      - '3000:3000'

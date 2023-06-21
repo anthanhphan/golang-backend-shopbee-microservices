@@ -28,7 +28,7 @@ const server = http.createServer((req, res) => {
     proxy(req, res);
 });
 
-const port = 80;
+const port = 3000;
 server.listen(port, () => {
     console.log(`Shopbee API gateway is running on port ${port}`);
 });
