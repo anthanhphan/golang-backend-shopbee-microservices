@@ -1,0 +1,6 @@
+{
+    "/v1/auth/sign-up": "http://shopbee-api.shop:3056/v1/auth/sign-up",
+    "/v1/auth/sign-in": "http://shopbee-api.shop:3056/v1/auth/sign-in"
+}
+
+
