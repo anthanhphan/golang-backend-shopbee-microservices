@@ -1,5 +1,5 @@
 run:
-	@node server.ts
+	@node server.js
 
 deploy:
 	@docker rmi -f api-gateway:0.0.1

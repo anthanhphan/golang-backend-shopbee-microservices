@@ -44,7 +44,7 @@ server.on("error", (err) => {
     console.error("Server Error:", err);
 });
 
-const port = 80;
+const port = 3000;
 server.listen(port, () => {
     console.log(`Shopbee API gateway is running on port ${port}`);
 });

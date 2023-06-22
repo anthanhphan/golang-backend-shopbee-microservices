@@ -12,6 +12,6 @@ RUN npm install --silent --progress=false
 
 COPY . .
 
-CMD ["node", "server.ts"]
+CMD ["node", "server.js"]
 
 EXPOSE 3000
