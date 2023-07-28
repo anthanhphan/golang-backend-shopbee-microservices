@@ -1,4 +1,4 @@
 {
-    "/v1/auth/sign-up": "http://shopbee-api.shop:3056/v1/auth/sign-up",
-    "/v1/auth/sign-in": "http://shopbee-api.shop:3056/v1/auth/sign-in"
+    "api/v1/user/register": "http://shopbee-api.shop:3055/api/v1/user/register",
+    "api/v1/user/authenticate": "http://shopbee-api.shop:3055/api/v1/user/authenticate"
 }

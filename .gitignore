@@ -1,2 +1,3 @@
 /api-gateway/node_modules
 /monitor
+/api/go.sum
