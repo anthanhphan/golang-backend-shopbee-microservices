@@ -1,0 +1,32 @@
+### ADD PRODUCT TO CART
+POST http://localhost:3000/api/v1/cart/addproduct
+Content-Type: application/json
+{
+    "user_id": 1,
+    "product_id": 1,
+    "product_quantity": 1
+}
+
+### VIEW CART
+GET http://localhost:3000/api/v1/product/cart/view
+Content-Type: application/json
+{
+    "user_id": 1
+}
+
+### UPDATE PRODUCT IN CART
+UPDATE http://localhost:3000/api/v1/product/cart/update
+Content-Type: application/json
+{
+    "user_id": 1,
+    "product_id": 1,
+    "product_quantity": 3
+}
+
+### REMOVE PRODUCT FROM CART
+DELETE  http://localhost:3000/api/v1/product/cart/remove
+Content-Type: application/json
+{
+    "user_id": 1,
+    "product_id": 1,
+}
