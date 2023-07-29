@@ -41,7 +41,7 @@ func (biz *updateUserBiz) UpdateUser(
 	result, err := biz.store.FindUserByCondition(ctx, map[string]interface{}{"id": id})
 
 	if err != nil {
-		return err
+		return common.ErrInternal(err)
 	}
 
 	if result.Status == 0 {

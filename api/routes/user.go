@@ -19,6 +19,7 @@ func UserRouterInit(router *gin.Engine, db *gorm.DB) {
 	{
 		userApi.POST("/register", usertransport.Register(appCtx))
 		userApi.POST("/authenticate", usertransport.Login(appCtx))
+		userApi.POST("/forgotpw", usertransport.ForgotPassword(appCtx))
 
 		userApi.GET("/profile", middleware.RequireAuth(appCtx), usertransport.Profile(appCtx))
 		userApi.DELETE("/delete", middleware.RequireAuth(appCtx), usertransport.DeleteUser(appCtx))

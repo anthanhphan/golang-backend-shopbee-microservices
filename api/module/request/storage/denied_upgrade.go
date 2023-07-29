@@ -4,6 +4,8 @@ import (
 	"context"
 	"shopbee/common"
 	reqmodel "shopbee/module/request/model"
+	mailservice "shopbee/module/sendmail"
+	usermodel "shopbee/module/user/model"
 )
 
 func (s *reqMySql) DenyRequestUpgrade(
@@ -21,6 +23,14 @@ func (s *reqMySql) DenyRequestUpgrade(
 
 		return common.ErrDB(err)
 	}
+
+	var user *usermodel.User
+	if err := db.Table("users").
+		Where("id = ?", data.UserId).First(&user).Error; err != nil {
+		return common.ErrDB(err)
+	}
+
+	mailservice.SendMail(user.Email, "Denied upgrade to retailer", mailservice.DeniedUpgrade)
 
 	return nil
 }

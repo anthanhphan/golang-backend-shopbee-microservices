@@ -46,6 +46,7 @@ func init() {
 }
 
 func main() {
+	// mailservice.SendMail("thanhanphan17@gmail.com", "Congratulation!!", mailservice.AcceptUpgrade)
 	router := gin.Default()
 	router.Use(middleware.Recover(appctx.NewAppContext(DB, SECRETKEY)))
 	router.Use(cors.New(
