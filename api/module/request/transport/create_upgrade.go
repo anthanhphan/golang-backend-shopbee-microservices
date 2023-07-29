@@ -19,10 +19,6 @@ func CreateRequestUpgrade(appCtx appctx.AppContext) gin.HandlerFunc {
 
 		var data reqmodel.RequestUpgrade
 
-		if err := c.ShouldBind(&data); err != nil {
-			panic(common.ErrInvalidRequest(err))
-		}
-
 		data.UserId = requester.GetUserId()
 
 		store := reqstorage.NewSQLStore(db)

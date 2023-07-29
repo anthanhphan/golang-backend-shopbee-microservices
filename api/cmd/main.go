@@ -48,7 +48,12 @@ func init() {
 func main() {
 	router := gin.Default()
 	router.Use(middleware.Recover(appctx.NewAppContext(DB, SECRETKEY)))
-	router.Use(cors.Default())
+	router.Use(cors.New(
+		cors.Config{
+			AllowAllOrigins: true,
+			AllowHeaders:    []string{"Origin", "Content-Type", "Accept", "Authorization"},
+		},
+	))
 
 	route.UserRouterInit(router, DB)
 	route.ProductRouterInit(router, DB)
