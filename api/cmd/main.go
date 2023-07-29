@@ -9,6 +9,7 @@ import (
 	"shopbee/middleware"
 	route "shopbee/routes"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/gorm"
@@ -47,6 +48,7 @@ func init() {
 func main() {
 	router := gin.Default()
 	router.Use(middleware.Recover(appctx.NewAppContext(DB, SECRETKEY)))
+	router.Use(cors.Default())
 
 	route.UserRouterInit(router, DB)
 	route.ProductRouterInit(router, DB)

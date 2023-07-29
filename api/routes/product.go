@@ -15,8 +15,9 @@ func ProductRouterInit(router *gin.Engine, db *gorm.DB) {
 
 	appCtx := appctx.NewAppContext(db, SECRETKEY)
 
-	productApi := router.Group("api/v1/product", middleware.RequireAuth(appCtx))
+	productApi := router.Group("api/v1/product")
 	{
-		productApi.POST("/create", producttransport.CreateProduct(appCtx))
+		productApi.POST("/create", middleware.RequireAuth(appCtx), producttransport.CreateProduct(appCtx))
+		productApi.GET("/list", producttransport.ListProduct(appCtx))
 	}
 }
