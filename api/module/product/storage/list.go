@@ -26,6 +26,10 @@ func (s *productMySql) ListDataWithCondition(
 		return nil, common.ErrDB(err)
 	}
 
+	for i := range moreKey {
+		db = db.Preload(moreKey[i])
+	}
+
 	if v := paging.FakeCursor; v != "" {
 		uid, err := common.FromBase58(v)
 

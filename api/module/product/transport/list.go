@@ -21,11 +21,10 @@ func ListProduct(appCtx appctx.AppContext) gin.HandlerFunc {
 		if err := c.ShouldBind(&pagingData); err != nil {
 			panic(common.ErrInvalidRequest(err))
 		}
-
 		pagingData.Fulfill()
 
 		type FilterTemp struct {
-			ShopId string `json:"shop_id,omitempty" form:"shop_id"`
+			ShopId *string `json:"shop_id,omitempty" form:"shop_id"`
 		}
 
 		var filterTemp FilterTemp
@@ -35,13 +34,17 @@ func ListProduct(appCtx appctx.AppContext) gin.HandlerFunc {
 			panic(common.ErrInvalidRequest(err))
 		}
 
-		uid, err := common.FromBase58(filterTemp.ShopId)
+		if filterTemp.ShopId != nil {
+			uid, err := common.FromBase58(*filterTemp.ShopId)
 
-		if err != nil {
-			panic(common.ErrInvalidRequest(err))
+			if err != nil {
+				panic(err)
+			}
+
+			filter.ShopId = int(uid.GetLocalID())
 		}
 
-		fmt.Print(int(uid.GetLocalID()))
+		fmt.Print(filter.ShopId)
 
 		store := productstorage.NewSQLStore(db)
 		biz := productbiz.NewListProductBiz(store)
