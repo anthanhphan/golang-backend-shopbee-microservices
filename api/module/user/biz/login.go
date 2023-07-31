@@ -86,3 +86,39 @@ func (biz *loginBiz) Login(
 
 	// return account, nil
 }
+
+func (biz *loginBiz) LoginAdmin(
+	ctx context.Context,
+	data *usermodel.UserLogin,
+) (*tokenprovider.Token, error) {
+	user, err := biz.storeUser.FindUserByCondition(ctx, map[string]interface{}{
+		"email": data.Email,
+	})
+
+	if err != nil {
+		return nil, ErrEmailOrPasswordInvalid
+	}
+
+	passHashed := biz.hasher.Hash(data.Password + user.Salt)
+
+	if user.Password != passHashed {
+		return nil, ErrEmailOrPasswordInvalid
+	}
+
+	if user.Role != "admin" {
+		return nil, common.ErrNoPermission(nil)
+	}
+
+	payload := tokenprovider.TokenPayload{
+		UserId: user.Id,
+		Role:   user.Role,
+	}
+
+	accessToken, err := biz.tokenProvider.Generate(payload, biz.expiry)
+
+	if err != nil {
+		return nil, common.ErrInternal(err)
+	}
+
+	return accessToken, nil
+}

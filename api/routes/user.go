@@ -27,4 +27,9 @@ func UserRouterInit(router *gin.Engine, db *gorm.DB) {
 		userApi.GET("/list", middleware.RequireAuth(appCtx), usertransport.ListUser(appCtx))
 		userApi.PATCH("/update/:id", middleware.RequireAuth(appCtx), usertransport.UpdateUser(appCtx))
 	}
+
+	adminApi := router.Group("api/v1/admin")
+	{
+		adminApi.POST("authenticate", usertransport.LoginAdmin(appCtx))
+	}
 }

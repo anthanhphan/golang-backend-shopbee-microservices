@@ -37,3 +37,28 @@ func Login(appCtx appctx.AppContext) gin.HandlerFunc {
 		c.JSON(http.StatusOK, common.SimpleSucessResponse(account))
 	}
 }
+
+func LoginAdmin(appCtx appctx.AppContext) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		db := appCtx.GetMainDBConnection()
+
+		var loginUserData usermodel.UserLogin
+
+		if err := c.ShouldBind(&loginUserData); err != nil {
+			panic(err)
+		}
+
+		tokenProvider := jwt.NewTokenJWTProvider(appCtx.SecretKey())
+
+		store := userstorage.NewSQLStore(db)
+		md5 := hasher.NewMd5Hash()
+		biz := userbiz.NewLoginBiz(store, tokenProvider, md5, 60*60*24*30)
+		account, err := biz.LoginAdmin(c.Request.Context(), &loginUserData)
+
+		if err != nil {
+			panic(err)
+		}
+
+		c.JSON(http.StatusOK, common.SimpleSucessResponse(account))
+	}
+}
