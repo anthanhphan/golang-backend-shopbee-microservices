@@ -1,19 +1,14 @@
 package route
 
 import (
-	"os"
 	"shopbee/component/appctx"
 	"shopbee/middleware"
 	usertransport "shopbee/module/user/transport"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
-func UserRouterInit(router *gin.Engine, db *gorm.DB) {
-	SECRETKEY := os.Getenv("SECRET_KEY")
-
-	appCtx := appctx.NewAppContext(db, SECRETKEY)
+func UserRouterInit(router *gin.Engine, appCtx appctx.AppContext) {
 
 	userApi := router.Group("api/v1/user")
 	{

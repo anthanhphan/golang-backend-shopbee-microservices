@@ -33,7 +33,7 @@ func extractTokenFromHeaderString(s string) (string, error) {
 // 3. From the token payload, we use user_id to find from DB
 func RequireAuth(appCtx appctx.AppContext) func(ctx *gin.Context) {
 
-	tokenProvider := jwt.NewTokenJWTProvider(appCtx.SecretKey())
+	tokenProvider := jwt.NewTokenJWTProvider(appCtx.GetSecretKey())
 
 	return func(c *gin.Context) {
 		token, err := extractTokenFromHeaderString(c.GetHeader("Authorization"))

@@ -23,7 +23,7 @@ func Login(appCtx appctx.AppContext) gin.HandlerFunc {
 			panic(err)
 		}
 
-		tokenProvider := jwt.NewTokenJWTProvider(appCtx.SecretKey())
+		tokenProvider := jwt.NewTokenJWTProvider(appCtx.GetSecretKey())
 
 		store := userstorage.NewSQLStore(db)
 		md5 := hasher.NewMd5Hash()
@@ -48,7 +48,7 @@ func LoginAdmin(appCtx appctx.AppContext) gin.HandlerFunc {
 			panic(err)
 		}
 
-		tokenProvider := jwt.NewTokenJWTProvider(appCtx.SecretKey())
+		tokenProvider := jwt.NewTokenJWTProvider(appCtx.GetSecretKey())
 
 		store := userstorage.NewSQLStore(db)
 		md5 := hasher.NewMd5Hash()

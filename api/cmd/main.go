@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"shopbee/component/appctx"
+	"shopbee/component/uploadprovider"
 	dbconn "shopbee/database"
 	"shopbee/middleware"
 	route "shopbee/routes"
@@ -46,9 +47,18 @@ func init() {
 }
 
 func main() {
-	// mailservice.SendMail("thanhanphan17@gmail.com", "Congratulation!!", mailservice.AcceptUpgrade)
 	router := gin.Default()
-	router.Use(middleware.Recover(appctx.NewAppContext(DB, SECRETKEY)))
+
+	s3BucketName := os.Getenv("S3BucketName")
+	s3Region := os.Getenv("S3Region")
+	s3APIKey := os.Getenv("S3APIKey")
+	s3SecretKey := os.Getenv("S3SecretKey")
+	s3Domain := os.Getenv("S3Domain")
+	fmt.Print(s3Domain)
+	s3Provider := uploadprovider.NewS3Provider(s3BucketName, s3Region, s3APIKey, s3SecretKey, s3Domain)
+
+	appCtx := appctx.NewAppContext(DB, s3Provider, SECRETKEY)
+	router.Use(middleware.Recover(appCtx))
 	router.Use(cors.New(
 		cors.Config{
 			AllowAllOrigins: true,
@@ -56,9 +66,10 @@ func main() {
 		},
 	))
 
-	route.UserRouterInit(router, DB)
-	route.ProductRouterInit(router, DB)
-	route.RequestRouterInit(router, DB)
+	route.UserRouterInit(router, appCtx)
+	route.ProductRouterInit(router, appCtx)
+	route.RequestRouterInit(router, appCtx)
+	route.UploadRouterInit(router, appCtx)
 
 	if err := router.Run(":" + PORT); err != nil {
 		log.Fatalln(err.Error())
