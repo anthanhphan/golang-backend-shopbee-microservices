@@ -31,7 +31,7 @@ func (biz *listProductBiz) ListProduct(
 	paging *common.Paging,
 	moreKey ...string,
 ) ([]productmodel.Product, error) {
-	result, err := biz.store.ListDataWithCondition(ctx, filter, paging, "Shop")
+	result, err := biz.store.ListDataWithCondition(ctx, filter, paging, "Shop", "Category")
 
 	if err != nil {
 		return nil, err
