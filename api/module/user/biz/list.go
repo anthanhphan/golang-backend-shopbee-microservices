@@ -34,9 +34,9 @@ func (biz *listUserBiz) ListUser(
 	moreKey ...string,
 ) ([]usermodel.User, error) {
 
-	if biz.requester.GetRole() != "admin" {
-		return nil, common.ErrNoPermission(nil)
-	}
+	// if biz.requester.GetRole() != "admin" {
+	// 	return nil, common.ErrNoPermission(nil)
+	// }
 
 	result, err := biz.store.ListDataWithCondition(ctx, filter, paging)
 

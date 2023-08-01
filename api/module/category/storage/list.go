@@ -1,30 +1,19 @@
-package productstorage
+package categorystorage
 
 import (
 	"context"
 	"shopbee/common"
-	productmodel "shopbee/module/product/model"
+	categorymodel "shopbee/module/category/model"
 )
 
-func (s *productMySql) ListDataWithCondition(
+func (s *categoryMySql) ListDataWithCondition(
 	context context.Context,
-	filter *productmodel.Filter,
 	paging *common.Paging,
 	moreKey ...string,
-) ([]productmodel.Product, error) {
-	var result []productmodel.Product
+) ([]categorymodel.Category, error) {
+	var result []categorymodel.Category
 
-	db := s.db.Table(productmodel.Product{}.TableName()).Where("status in (1)")
-
-	if f := filter; f != nil {
-		if f.ShopId > 0 {
-			db = db.Where("shop_id = ?", f.ShopId)
-		}
-
-		if f.CategoryId > 0 {
-			db = db.Where("category_id = ?", f.CategoryId)
-		}
-	}
+	db := s.db.Table(categorymodel.Category{}.TableName()).Where("status in (1)")
 
 	if err := db.Count(&paging.Total).Error; err != nil {
 		return nil, common.ErrDB(err)

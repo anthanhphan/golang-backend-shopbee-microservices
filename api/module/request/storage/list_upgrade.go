@@ -16,12 +16,6 @@ func (s *reqMySql) ListUpgradeWithCondition(
 
 	db := s.db.Table(reqmodel.RequestUpgrade{}.TableName()).Where("status in (1)")
 
-	// if f := filter; f != nil {
-	// 	if f.OwnerId > 0 {
-	// 		db = db.Where("owner_id = ?", f.OwnerId)
-	// 	}
-	// }
-
 	if err := db.Count(&paging.Total).Error; err != nil {
 		return nil, common.ErrDB(err)
 	}
@@ -49,13 +43,6 @@ func (s *reqMySql) ListUpgradeWithCondition(
 		Find(&result).Error; err != nil {
 		return nil, common.ErrDB(err)
 	}
-
-	// if len(result) > 0 {
-	// 	last := result[len(result)-1]
-	// 	last.Mask(false)
-
-	// 	paging.NextCursor = last.FakeId.String()
-	// }
 
 	return result, nil
 }

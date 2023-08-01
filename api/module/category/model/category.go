@@ -4,6 +4,7 @@ import "shopbee/common"
 
 type Category struct {
 	common.SQLModel `json:",inline"`
+	RId             int           `json:"rid,omitempty" gorm:"-"`
 	Name            string        `json:"name" gorm:"column:name;"`
 	Image           *common.Image `json:"image" gorm:"column:image;"`
 }

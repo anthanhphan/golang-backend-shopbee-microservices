@@ -16,11 +16,11 @@ func (s *userMySql) ListDataWithCondition(
 
 	db := s.db.Table(usermodel.User{}.TableName()).Where("status in (1)")
 
-	// if f := filter; f != nil {
-	// 	if f.OwnerId > 0 {
-	// 		db = db.Where("owner_id = ?", f.OwnerId)
-	// 	}
-	// }
+	if f := filter; f != nil {
+		if f.Role != "" {
+			db = db.Where("role = ?", f.Role)
+		}
+	}
 
 	if err := db.Count(&paging.Total).Error; err != nil {
 		return nil, common.ErrDB(err)

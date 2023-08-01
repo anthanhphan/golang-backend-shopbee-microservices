@@ -1,7 +1,6 @@
 package producttransport
 
 import (
-	"fmt"
 	"net/http"
 	"shopbee/common"
 	"shopbee/component/appctx"
@@ -24,7 +23,8 @@ func ListProduct(appCtx appctx.AppContext) gin.HandlerFunc {
 		pagingData.Fulfill()
 
 		type FilterTemp struct {
-			ShopId *string `json:"shop_id,omitempty" form:"shop_id"`
+			ShopId     *string `json:"shop_id,omitempty" form:"shop_id"`
+			CategoryId int     `json:"category_id,omitempty" form:"category_id"`
 		}
 
 		var filterTemp FilterTemp
@@ -44,7 +44,9 @@ func ListProduct(appCtx appctx.AppContext) gin.HandlerFunc {
 			filter.ShopId = int(uid.GetLocalID())
 		}
 
-		fmt.Print(filter.ShopId)
+		filter.CategoryId = filterTemp.CategoryId
+
+		// fmt.Print(filter.ShopId)
 
 		store := productstorage.NewSQLStore(db)
 		biz := productbiz.NewListProductBiz(store)

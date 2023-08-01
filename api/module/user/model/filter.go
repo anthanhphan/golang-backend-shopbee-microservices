@@ -1,5 +1,5 @@
 package usermodel
 
 type Filter struct {
-	Addr int `json:"addr,omitempty" form:"addr"`
+	Role string `json:"role,omitempty" form:"role"`
 }
