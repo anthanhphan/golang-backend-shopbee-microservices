@@ -1,10 +1,13 @@
 -- Active: 1689318590192@@4.193.147.16@3306@shopbee
+-- DROP DATABASE --
 DROP DATABASE IF EXISTS `shopbee`;
 
+-- CREATE DATABASE --
 CREATE DATABASE `shopbee`;
 
 USE `shopbee`;
 
+-- DROP EXISTED TABLE --
 DROP TABLE IF EXISTS `images`;
 
 DROP TABLE IF EXISTS `discounts`;
@@ -31,13 +34,19 @@ DROP TABLE IF EXISTS `categories`;
 
 DROP TABLE IF EXISTS `users`;
 
+-- TABLE STRUCTURE --
 CREATE TABLE `users` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `email` VARCHAR(50) UNIQUE NOT NULL,
     `fullname` VARCHAR(50) NOT NULL,
     `password` VARCHAR(50) NOT NULL,
     `phone` VARCHAR(20) UNIQUE,
-    `role` ENUM ('buyer', 'retailer', 'admin', 'moderator') NOT NULL DEFAULT "buyer",
+    `role` ENUM (
+        'buyer',
+        'retailer',
+        'admin',
+        'moderator'
+    ) NOT NULL DEFAULT "buyer",
     `salt` VARCHAR(50),
     `addr` VARCHAR(200),
     `status` INT NOT NULL DEFAULT 1,
@@ -121,7 +130,12 @@ CREATE TABLE `orders` (
     `payment_id` INT NOT NULL,
     `total_price` FLOAT NOT NULL,
     `shipping_addr` VARCHAR(200) NOT NULL,
-    `order_status` ENUM ('pending', 'confirm', 'delivering', 'completed') NOT NULL DEFAULT "pending",
+    `order_status` ENUM (
+        'pending',
+        'confirm',
+        'delivering',
+        'completed'
+    ) NOT NULL DEFAULT "pending",
     `status` INT NOT NULL DEFAULT 1,
     `created_at` TIMESTAMP DEFAULT (CURRENT_TIMESTAMP),
     `updated_at` TIMESTAMP DEFAULT (CURRENT_TIMESTAMP)
@@ -140,7 +154,11 @@ CREATE TABLE `order_details` (
 
 CREATE TABLE `request_upgrades` (
     `user_id` INT PRIMARY KEY,
-    `request_status` ENUM ('pending', 'accepted', 'denied') NOT NULL DEFAULT "pending",
+    `request_status` ENUM (
+        'pending',
+        'accepted',
+        'denied'
+    ) NOT NULL DEFAULT "pending",
     `status` INT NOT NULL DEFAULT 1,
     `created_at` TIMESTAMP DEFAULT (CURRENT_TIMESTAMP),
     `updated_at` TIMESTAMP DEFAULT (CURRENT_TIMESTAMP)
@@ -178,12 +196,14 @@ CREATE TABLE `discounts` (
     `updated_at` TIMESTAMP DEFAULT (CURRENT_TIMESTAMP)
 );
 
+--  INDEXING --
 CREATE UNIQUE INDEX `users_index_0` ON `users` (`email`);
 
 CREATE UNIQUE INDEX `categories_index_1` ON `categories` (`name`);
 
 CREATE UNIQUE INDEX `discounts_index_2` ON `discounts` (`code`);
 
+-- FOREIGN KEY --
 ALTER TABLE
     `shop_follows`
 ADD
@@ -263,3 +283,158 @@ ALTER TABLE
     `report_accounts`
 ADD
     FOREIGN KEY (`shop_id`) REFERENCES `users` (`id`);
+
+-- USER DATA INSERT --
+INSERT INTO
+    `users` (
+        id,
+        email,
+        fullname,
+        password,
+        phone,
+        role,
+        salt,
+        addr
+    )
+VALUES
+    (
+        1,
+        'ptan21@clc.fitus.edu.vn',
+        'Phan Thanh An',
+        'e45b0809fc62d75697fb01929de8cffb',
+        '0325364474',
+        'admin',
+        'ChzFqomjOSSwdChbQVFTqqBnQrwUGfqFDDFgCdILGAQHfLbmfF',
+        '227 Nguyễn Văn Cừ, P4, Q5, TP.HCM'
+    ),
+    (
+        2,
+        'nhhuu21@clc.fitus.edu.vn',
+        'Nguyễn Hi Hữu',
+        'e45b0809fc62d75697fb01929de8cffb',
+        '0325364475',
+        'admin',
+        'ChzFqomjOSSwdChbQVFTqqBnQrwUGfqFDDFgCdILGAQHfLbmfF',
+        '227 Nguyễn Văn Cừ, P4, Q5, TP.HCM'
+    ),
+    (
+        3,
+        'phgbao21@clc.fitus.edu.vn',
+        'Phạm Hồng Gia Bảo',
+        'e45b0809fc62d75697fb01929de8cffb',
+        '0325364476',
+        'admin',
+        'ChzFqomjOSSwdChbQVFTqqBnQrwUGfqFDDFgCdILGAQHfLbmfF',
+        '227 Nguyễn Văn Cừ, P4, Q5, TP.HCM'
+    ),
+    (
+        4,
+        'ntthuan20@clc.fitus.edu.vn',
+        'Nguyễn Thành Thuuận',
+        'e45b0809fc62d75697fb01929de8cffb',
+        '0325364478',
+        'admin',
+        'ChzFqomjOSSwdChbQVFTqqBnQrwUGfqFDDFgCdILGAQHfLbmfF',
+        '227 Nguyễn Văn Cừ, P4, Q5, TP.HCM'
+    );
+
+-- CATEGORY DATA INSERT --
+INSERT INTO
+    `categories` (id, name, image)
+VALUES
+    (
+        1,
+        'Information Technology',
+        '{
+            \"id\": 0, 
+            \"url\": \"http://d1851nciml9u0m.cloudfront.net/category/it-1690871711814317800.jpg\", 
+            \"width\": 507, 
+            \"height\": 690, 
+            \"extension\": \".jpg\", 
+            \"cloud_name\": \"s3\"
+        }'
+    ),
+    (
+        2,
+        'Physic',
+        '{
+            \"id\": 0, 
+            \"url\": \"http://d1851nciml9u0m.cloudfront.net/category/phys-1690871780988147100.jpg\", 
+            \"width\": 800, 
+            \"height\": 1207, 
+            \"extension\": \".jpg\", 
+            \"cloud_name\": \"s3\"
+        }'
+    ),
+    (
+        3,
+        'Philosophy',
+        '{
+            \"id\": 0, 
+            \"url\": \"http://d1851nciml9u0m.cloudfront.net/category/phil-1690871806137092000.jpg\", 
+            \"width\": 800, 
+            \"height\": 800, 
+            \"extension\": \".jpg\", 
+            \"cloud_name\": \"s3\"
+        }'
+    ),
+    (
+        4,
+        'Chemistry ',
+        '{
+            \"id\": 0, 
+            \"url\": \"http://d1851nciml9u0m.cloudfront.net/category/chem-1690871829236975500.jpg\", 
+            \"width\": 900, 
+            \"height\": 900, 
+            \"extension\": \".jpg\", 
+            \"cloud_name\": \"s3\"
+        }'
+    ),
+    (
+        5,
+        'Electronics',
+        '{
+            \"id\": 0, 
+            \"url\": \"http://d1851nciml9u0m.cloudfront.net/category/elec-1690871848792890800.jpg\", 
+            \"width\": 545, 
+            \"height\": 763, 
+            \"extension\": \".jpg\", 
+            \"cloud_name\": \"s3\"
+        }'
+    ),
+    (
+        6,
+        'Economics',
+        '{
+            \"id\": 0, 
+            \"url\": \"http://d1851nciml9u0m.cloudfront.net/category/eco-1690871880562690000.jpg\", 
+            \"width\": 1803, 
+            \"height\": 2814, 
+            \"extension\": \".jpg\", 
+            \"cloud_name\": \"s3\"
+        }'
+    ),
+    (
+        7,
+        'Biology ',
+        '{
+            \"id\": 0, 
+            \"url\": \"http://d1851nciml9u0m.cloudfront.net/category/bio-1690871901477291100.jpg\", 
+            \"width\": 770, 
+            \"height\": 1031, 
+            \"extension\": \".jpg\", 
+            \"cloud_name\": \"s3\"
+        }'
+    ),
+    (
+        8,
+        'Mathematics',
+        '{
+            \"id\": 0, 
+            \"url\": \"http://d1851nciml9u0m.cloudfront.net/category/math-1690871922855668600.jpg\", 
+            \"width\": 800, 
+            \"height\": 1143, 
+            \"extension\": \".jpg\", 
+            \"cloud_name\": \"s3\"
+        }'
+    );
