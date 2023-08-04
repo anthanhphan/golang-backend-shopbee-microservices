@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"shopbee/common"
 	"shopbee/component/appctx"
 	"shopbee/component/uploadprovider"
 	"shopbee/middleware"
@@ -29,6 +30,8 @@ func init() {
 	if env == "PRO" {
 		PORT = os.Getenv("APP_PRO_PORT")
 	}
+
+	common.RegisDiscovery("upload", PORT)
 }
 
 func main() {
