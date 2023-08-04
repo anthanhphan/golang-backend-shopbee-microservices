@@ -25,6 +25,7 @@ func ListProduct(appCtx appctx.AppContext) gin.HandlerFunc {
 		type FilterTemp struct {
 			ShopId     *string `json:"shop_id,omitempty" form:"shop_id"`
 			CategoryId int     `json:"category_id,omitempty" form:"category_id"`
+			KeyWord    string  `json:"key_word,omitempty" form:"key_word"`
 		}
 
 		var filterTemp FilterTemp
@@ -45,6 +46,7 @@ func ListProduct(appCtx appctx.AppContext) gin.HandlerFunc {
 		}
 
 		filter.CategoryId = filterTemp.CategoryId
+		filter.KeyWord = filterTemp.KeyWord
 
 		// fmt.Print(filter.ShopId)
 

@@ -24,6 +24,10 @@ func (s *productMySql) ListDataWithCondition(
 		if f.CategoryId > 0 {
 			db = db.Where("category_id = ?", f.CategoryId)
 		}
+
+		if f.KeyWord != "" {
+			db = db.Where("name like ?", "%"+f.KeyWord+"%")
+		}
 	}
 
 	if err := db.Count(&paging.Total).Error; err != nil {
