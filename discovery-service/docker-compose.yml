@@ -1,0 +1,9 @@
+version: '2'
+services:
+  web-service:
+    container_name: discovery-service
+    build: .
+    image: discovery-service:0.0.1
+    tty: true
+    ports:
+      - '8000:8000'
