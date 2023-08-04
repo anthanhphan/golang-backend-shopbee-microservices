@@ -27,4 +27,9 @@ func UserRouterInit(router *gin.Engine, appCtx appctx.AppContext) {
 	{
 		adminApi.POST("authenticate", usertransport.LoginAdmin(appCtx))
 	}
+
+	shopApi := router.Group("api/v1/shop")
+	{
+		shopApi.GET("/list", middleware.RequireAuth(appCtx), usertransport.ListShop(appCtx))
+	}
 }
