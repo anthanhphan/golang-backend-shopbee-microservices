@@ -38,7 +38,7 @@ func (s *categoryMySql) ListDataWithCondition(
 
 	if err := db.
 		Limit(int(paging.Limit)).
-		Order("id desc").
+		Order("id asc").
 		Find(&result).Error; err != nil {
 		return nil, common.ErrDB(err)
 	}
