@@ -1,4 +1,0 @@
-{
-    "/api/v1/user/register": "http://shopbee-api.shop:3055/api/v1/user/register",
-    "/api/v1/user/authenticate": "http://shopbee-api.shop:3055/api/v1/user/authenticate"
-}

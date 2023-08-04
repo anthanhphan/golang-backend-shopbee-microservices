@@ -1,50 +1,43 @@
-const http = require("http");
-const routes = require("./routes.json");
+const express = require("express");
+const axios = require("axios");
+const urls = require("./urls");
 
-// Specify the default backend server URL for invalid routes
-const defaultBackendURL = "http://localhost:8000";
+const app = express();
+const port = 3055;
 
-// Create API gateway server
-const server = http.createServer((req, res) => {
-    // Select backend server based on the requested route
-    const route = Object.keys(routes).find((r) => req.url.startsWith(r));
-    const backendURL = route ? routes[route] : defaultBackendURL;
+let routes = [];
 
-    if (!backendURL) {
-        // No matching route found, send a 404 response
-        res.statusCode = 404;
-        res.end("Not Found");
-        return;
-    }
+async function fetchRoutes() {
+    const requests = urls.map((url) => axios.get(url).catch((error) => null));
 
-    // Create a proxy request to the selected backend server
-    const proxyReq = http.request(
-        backendURL,
-        { method: req.method, headers: req.headers },
-        (proxyRes) => {
-            // Forward the response from the backend server to the client
-            res.writeHead(proxyRes.statusCode, proxyRes.headers);
-            proxyRes.pipe(res);
+    const responses = await axios.all(requests);
+
+    const newRoutes = [];
+
+    responses.forEach((resp, index) => {
+        if (resp) {
+            const parts = resp.config.url.split("/");
+            const lastPart = parts.pop();
+            const route = {
+                path: "/api/v1/" + lastPart,
+                target: resp.data["serviceUrl"],
+            };
+
+            newRoutes.push(route);
+        } else {
+            console.error(`Failed to fetch data for URL: ${urls[index]}`);
         }
-    );
-
-    // Forward the client request body to the backend server
-    req.pipe(proxyReq);
-
-    // Error handler for the proxy request
-    proxyReq.on("error", (err) => {
-        console.error("Proxy Request Error:", err);
-        res.statusCode = 500;
-        res.end("Proxy Request Error");
     });
-});
 
-// Error handler for the server
-server.on("error", (err) => {
-    console.error("Server Error:", err);
-});
+    routes = newRoutes;
+    console.log(routes);
+}
 
-const port = 3000;
-server.listen(port, () => {
-    console.log(`Shopbee API gateway is running on port ${port}`);
+// Fetch routes initially and then set an interval to update every 10 seconds
+fetchRoutes().then(() => {
+    setInterval(fetchRoutes, 10000); // Update routes every 10 seconds
+
+    app.listen(port, () => {
+        console.log(`API Gateway is listening at http://localhost:${port}`);
+    });
 });
