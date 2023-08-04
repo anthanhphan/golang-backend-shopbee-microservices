@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  web-service:
+    container_name: shopbee-upload-service
+    build: .
+    image: shopbee-upload-service:0.0.1
+    ports:
+      - "3001:3001"

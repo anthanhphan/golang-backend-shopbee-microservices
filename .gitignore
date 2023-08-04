@@ -1,3 +1,4 @@
 /api-gateway/node_modules
 /monitor
 /api/go.sum
+/discovery-service/node_modules
