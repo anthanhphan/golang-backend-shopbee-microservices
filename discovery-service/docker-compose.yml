@@ -6,4 +6,4 @@ services:
     image: discovery-service:0.0.1
     tty: true
     ports:
-      - '8000:8000'
+      - '8080:8080'

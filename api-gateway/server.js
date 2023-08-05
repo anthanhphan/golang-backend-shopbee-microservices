@@ -52,7 +52,7 @@ fetchRoutes().then(() => {
         }
     });
 
-    app.listen(3055, () => {
-        console.log("API Gateway is listening on port 3055");
+    app.listen(3000, () => {
+        console.log("API Gateway is listening on port 3000");
     });
 });
