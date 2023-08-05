@@ -3,7 +3,7 @@ run:
 
 deploy:
 	@docker rmi -f api-gateway:0.0.1
-	@docker-compose up -d
+	@docker compose up -d
 
 rm:
 	@docker stop api-gateway
