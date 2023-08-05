@@ -1,9 +1,13 @@
+require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
+const httpProxy = require("http-proxy");
 const urls = require("./urls");
 
 const app = express();
-const port = 3055;
+const proxy = httpProxy.createProxyServer({});
+const { pushToLogDiscord } = require("./middleware/logger");
+app.use(pushToLogDiscord);
 
 let routes = [];
 
@@ -33,11 +37,22 @@ async function fetchRoutes() {
     console.log(routes);
 }
 
-// Fetch routes initially and then set an interval to update every 10 seconds
 fetchRoutes().then(() => {
-    setInterval(fetchRoutes, 10000); // Update routes every 10 seconds
+    setInterval(fetchRoutes, 120000); // Update routes every 2 minutes
 
-    app.listen(port, () => {
-        console.log(`API Gateway is listening at http://localhost:${port}`);
+    app.all("*", (req, res) => {
+        const matchedRoute = routes.find((route) =>
+            req.path.startsWith(route.path)
+        );
+
+        if (matchedRoute) {
+            proxy.web(req, res, { target: matchedRoute.target });
+        } else {
+            res.status(404).send("Route not found");
+        }
+    });
+
+    app.listen(3055, () => {
+        console.log("API Gateway is listening on port 3055");
     });
 });
