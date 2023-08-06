@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  web-service:
+    container_name: mail-service
+    build: .
+    image: mail-service:0.0.1
+    ports:
+      - "3003:3003"
