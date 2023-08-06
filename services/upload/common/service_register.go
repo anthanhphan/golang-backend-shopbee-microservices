@@ -5,10 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 )
 
 func RegisDiscovery(name, port string) {
-	url := "http://shopbee-api.shop:8000/register"
+
+	url := os.Getenv("SERVER_IP") + ":8080/register"
 	type Payload struct {
 		ServiceName string `json:"serviceName"`
 		ServiceUrl  string `json:"serviceUrl"`
@@ -16,7 +18,7 @@ func RegisDiscovery(name, port string) {
 
 	payload := Payload{
 		ServiceName: name,
-		ServiceUrl:  "http://shopbee-api.shop:" + port,
+		ServiceUrl:  "http://13.54.238.78:" + port,
 	}
 
 	// Convert struct to JSON
