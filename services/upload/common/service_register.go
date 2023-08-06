@@ -18,7 +18,7 @@ func RegisDiscovery(name, port string) {
 
 	payload := Payload{
 		ServiceName: name,
-		ServiceUrl:  "http://13.54.238.78:" + port,
+		ServiceUrl:  GetPublicIP() + ":" + port,
 	}
 
 	// Convert struct to JSON
