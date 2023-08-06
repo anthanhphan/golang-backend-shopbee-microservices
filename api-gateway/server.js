@@ -38,7 +38,7 @@ async function fetchRoutes() {
 }
 
 fetchRoutes().then(() => {
-    setInterval(fetchRoutes, 120000); // Update routes every 2 minutes
+    setInterval(fetchRoutes, 60000); // Update routes every 2 minutes
 
     app.all("*", (req, res) => {
         const matchedRoute = routes.find((route) =>
@@ -52,7 +52,7 @@ fetchRoutes().then(() => {
         }
     });
 
-    app.listen(3000, () => {
-        console.log("API Gateway is listening on port 3000");
+    app.listen(80, () => {
+        console.log("API Gateway is listening on port 80");
     });
 });

@@ -1,8 +1,7 @@
 const urls = [
-    "http://localhost:8080/discover/user",
-    "http://localhost:8080/discover/product",
-    "http://localhost:8080/discover/upload",
-    "http://localhost:8080/discover/request",
+    "http://13.54.238.78:8080/discover/user",
+    "http://13.54.238.78:8080/discover/product",
+    "http://13.54.238.78:8080/discover/upload",
 ];
 
 module.exports = urls;
