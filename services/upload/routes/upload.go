@@ -9,8 +9,8 @@ import (
 
 func UploadRouterInit(router *gin.Engine, appCtx appctx.AppContext) {
 
-	uploadApi := router.Group("api/v1/image")
+	uploadApi := router.Group("api/v1/upload")
 	{
-		uploadApi.POST("/upload", uploadtransport.Upload(appCtx))
+		uploadApi.POST("/image", uploadtransport.Upload(appCtx))
 	}
 }
