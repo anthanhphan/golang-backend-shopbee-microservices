@@ -3,8 +3,20 @@ package common
 type SimpleUser struct {
 	SQLModel `json:",inline"`
 	FullName string `json:"fullname" gorm:"column:fullname;"`
+	Email    string `json:"email" gorm:"column:email;"`
 	Role     string `json:"role" gorm:"column:role;"`
-	Avatar   *Image `json:"avatar,omitempty" gorm:"column:avatar;type:json"`
+}
+
+func (u *SimpleUser) GetUserId() int {
+	return u.Id
+}
+
+func (u *SimpleUser) GetEmail() string {
+	return u.Email
+}
+
+func (u *SimpleUser) GetRole() string {
+	return u.Role
 }
 
 func (SimpleUser) TableName() string {

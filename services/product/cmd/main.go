@@ -62,7 +62,6 @@ func main() {
 	))
 
 	route.ProductRouterInit(router, appCtx)
-	route.CategoryRouterInit(router, appCtx)
 
 	if err := router.Run(":" + PORT); err != nil {
 		log.Fatalln(err.Error())

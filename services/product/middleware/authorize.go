@@ -1,11 +1,9 @@
 package middleware
 
 import (
-	"errors"
 	"shopbee/common"
 	"shopbee/component/appctx"
 	"shopbee/component/tokenprovider/jwt"
-	userstorage "shopbee/module/user/storage"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -42,25 +40,17 @@ func RequireAuth(appCtx appctx.AppContext) func(ctx *gin.Context) {
 			panic(err)
 		}
 
-		db := appCtx.GetMainDBConnection()
-
-		store := userstorage.NewSQLStore(db)
-
 		payload, err := tokenProvider.Validate(token)
 
 		if err != nil {
 			panic(err)
 		}
 
-		user, err := store.FindUserByCondition(c.Request.Context(), map[string]interface{}{"id": payload.UserId})
+		user, err := getProfile(token)
+		user.Id = payload.UserId
 
 		if err != nil {
-			//c.AbortWithStatusJSON(http.StatusUnauthorized, err)
 			panic(err)
-		}
-
-		if user.Status == 0 {
-			panic(common.ErrNoPermission(errors.New("user has been deleted or banned")))
 		}
 
 		user.Mask(false)
