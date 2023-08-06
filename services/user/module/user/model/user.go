@@ -8,13 +8,14 @@ const EntityName = "User"
 
 type User struct {
 	common.SQLModel `json:",inline"`
-	Email           string `json:"email" gorm:"column:email;"`
-	FullName        string `json:"fullname" gorm:"column:fullname;"`
-	Phone           string `json:"phone" gorm:"column:phone;"`
-	Role            string `json:"role" gorm:"column:role;"`
-	Addr            string `json:"addr" gorm:"column:addr;"`
-	Password        string `json:"-" gorm:"column:password;"`
-	Salt            string `json:"-" gorm:"column:salt;"`
+	Email           string        `json:"email" gorm:"column:email;"`
+	FullName        string        `json:"fullname" gorm:"column:fullname;"`
+	Phone           string        `json:"phone" gorm:"column:phone;"`
+	Role            string        `json:"role" gorm:"column:role;"`
+	Addr            string        `json:"addr" gorm:"column:addr;"`
+	Avatar          *common.Image `json:"avatar" gorm:"column:avatar;"`
+	Password        string        `json:"-" gorm:"column:password;"`
+	Salt            string        `json:"-" gorm:"column:salt;"`
 }
 
 func (u *User) GetUserId() int {
