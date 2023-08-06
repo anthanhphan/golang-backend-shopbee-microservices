@@ -15,6 +15,7 @@ func UserRouterInit(router *gin.Engine, appCtx appctx.AppContext) {
 	{
 		userApi.GET("/profile", middleware.RequireAuth(appCtx), usertransport.Profile(appCtx))
 		userApi.GET("/list", middleware.RequireAuth(appCtx), usertransport.ListUser(appCtx))
+		userApi.GET("/getstatus/:id", usertransport.FindUser(appCtx))
 
 		userApi.POST("/register", usertransport.Register(appCtx))
 		userApi.POST("/authenticate", usertransport.Login(appCtx))
