@@ -48,13 +48,13 @@ func (biz *updateUserBiz) UpdateUser(
 		return common.ErrEntityDeleted(usermodel.EntityName, nil)
 	}
 
-	if biz.requester.GetRole() != data.Role && biz.requester.GetRole() != "admin" {
-		return common.ErrNoPermission(nil)
-	}
+	// if biz.requester.GetRole() != data.Role && biz.requester.GetRole() != "admin" {
+	// 	return common.ErrNoPermission(nil)
+	// }
 
-	if biz.requester.GetRole() != "admin" && result.Id != biz.requester.GetUserId() {
-		return common.ErrNoPermission(nil)
-	}
+	// if biz.requester.GetRole() != "admin" && result.Id != biz.requester.GetUserId() {
+	// 	return common.ErrNoPermission(nil)
+	// }
 
 	if err := biz.store.UpdateData(ctx, id, data); err != nil {
 		return err
