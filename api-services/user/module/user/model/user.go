@@ -64,11 +64,12 @@ func (UserLogin) TableName() string {
 }
 
 type UserUpdate struct {
-	Email    string `json:"email" gorm:"column:email;"`
-	FullName string `json:"fullname" gorm:"column:fullname;"`
-	Phone    string `json:"phone" gorm:"column:phone;"`
-	Addr     string `json:"addr" gorm:"column:addr;"`
-	Role     string `json:"role" gorm:"column:role;"`
+	Email    string        `json:"email" gorm:"column:email;"`
+	FullName string        `json:"fullname" gorm:"column:fullname;"`
+	Phone    string        `json:"phone" gorm:"column:phone;"`
+	Addr     string        `json:"addr" gorm:"column:addr;"`
+	Role     string        `json:"role" gorm:"column:role;"`
+	Avatar   *common.Image `json:"avatar" gorm:"column:avatar;"`
 }
 
 func (UserUpdate) TableName() string {
