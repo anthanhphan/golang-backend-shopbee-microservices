@@ -47,6 +47,7 @@ CREATE TABLE `users` (
         'admin',
         'moderator'
     ) NOT NULL DEFAULT "buyer",
+    `avatar` JSON,
     `salt` VARCHAR(50),
     `addr` VARCHAR(200),
     `status` INT NOT NULL DEFAULT 1,

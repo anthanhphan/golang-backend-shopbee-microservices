@@ -4,14 +4,6 @@ import (
 	"time"
 )
 
-type UserUpgrade struct {
-	Role string `json:"role" gorm:"column:role;"`
-}
-
-func (UserUpgrade) TableName() string {
-	return "users"
-}
-
 type RequestUpgrade struct {
 	UserId    int        `json:"user_id" gorm:"column:user_id;"`
 	ReqStatus string     `json:"req_status,omitempty" gorm:"column:request_status;default:pending;"`
