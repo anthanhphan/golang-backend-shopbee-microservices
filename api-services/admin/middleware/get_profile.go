@@ -19,7 +19,7 @@ type userData struct {
 func getProfile(jwt string) (*common.SimpleUser, error) {
 	var simpleUser common.SimpleUser
 
-	endpoint := "http://13.54.238.78/api/v1/user/profile"
+	endpoint := "http://shopbee-api.shop/api/v1/user/profile"
 	jwtToken := jwt
 
 	// Create a new HTTP client

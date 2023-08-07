@@ -10,7 +10,7 @@ import (
 
 func RegisDiscovery(name, port string) {
 
-	url := os.Getenv("SERVER_IP") + ":8080/register"
+	url := os.Getenv("SERVER_IP") + "/register"
 	type Payload struct {
 		ServiceName string `json:"serviceName"`
 		ServiceUrl  string `json:"serviceUrl"`
@@ -18,7 +18,7 @@ func RegisDiscovery(name, port string) {
 
 	payload := Payload{
 		ServiceName: name,
-		ServiceUrl:  "http://13.54.238.78:" + port,
+		ServiceUrl:  GetPublicIP() + ":" + port,
 	}
 
 	// Convert struct to JSON
