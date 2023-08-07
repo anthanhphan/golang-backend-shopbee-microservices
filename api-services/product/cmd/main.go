@@ -43,7 +43,6 @@ func init() {
 	}
 
 	common.RegisDiscovery("product", PORT)
-	common.RegisDiscovery("category", PORT)
 
 	DB = dbconn.ConnectDB(DSN)
 	DB = DB.Debug()
