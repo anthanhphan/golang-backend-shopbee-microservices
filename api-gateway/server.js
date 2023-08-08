@@ -38,7 +38,7 @@ async function fetchRoutes() {
 }
 
 fetchRoutes().then(() => {
-    setInterval(fetchRoutes, 60000); // Update routes every 2 minutes
+    setInterval(fetchRoutes, 30000); // Update routes every 2 minutes
 
     app.all("*", (req, res) => {
         const matchedRoute = routes.find((route) =>
@@ -46,7 +46,11 @@ fetchRoutes().then(() => {
         );
 
         if (matchedRoute) {
-            proxy.web(req, res, { target: matchedRoute.target });
+            proxy.web(req, res, { target: matchedRoute.target }, (error) => {
+                // Handle proxy error
+                console.error("Proxy error:", error);
+                res.status(500).send("Proxy request failed");
+            });
         } else {
             res.status(404).send("Route not found");
         }
