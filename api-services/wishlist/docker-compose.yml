@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  web-service:
+    container_name: wishlist-service
+    build: .
+    image: wishlist-service:0.0.1
+    ports:
+      - "3006:3006"
