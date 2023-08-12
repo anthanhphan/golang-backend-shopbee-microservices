@@ -12,7 +12,7 @@ func CartRouterInit(router *gin.Engine, appCtx appctx.AppContext) {
 
 	cartApi := router.Group("api/v1/cart")
 	{
-		cartApi.POST("/addproduct/:id", middleware.RequireAuth(appCtx), carttransport.AddToCart(appCtx))
+		cartApi.POST("/addproduct", middleware.RequireAuth(appCtx), carttransport.AddToCart(appCtx))
 		cartApi.GET("/view", middleware.RequireAuth(appCtx), carttransport.ViewMyCart(appCtx))
 	}
 }

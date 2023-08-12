@@ -16,11 +16,28 @@ func AddToCart(appctx appctx.AppContext) gin.HandlerFunc {
 		db := appctx.GetMainDBConnection()
 		requester := c.MustGet(common.CurrentUser).(common.Requester)
 
-		var data cartmodel.CartCreate
+		type CartCreate struct {
+			ProductId       string `json:"product_id"`
+			ProductQuantity int    `json:"quantity"`
+		}
 
-		if err := c.ShouldBind(&data); err != nil {
+		var cartCreate CartCreate
+
+		if err := c.ShouldBind(&cartCreate); err != nil {
 			panic(common.ErrInvalidRequest(err))
 		}
+
+		uid, err := common.FromBase58(cartCreate.ProductId)
+
+		if err != nil {
+			panic(common.ErrInvalidRequest(err))
+		}
+
+		var data cartmodel.CartCreate
+
+		data.UserId = requester.GetUserId()
+		data.ProductId = int(uid.GetLocalID())
+		data.ProductQuantity = cartCreate.ProductQuantity
 
 		store := cartstorage.NewSQLStore(db)
 		biz := cartbiz.NewAddToCartBiz(store, requester)
