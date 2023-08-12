@@ -36,7 +36,7 @@ func NewForgotPWBiz(store ForgotPWStorage) *forgotPWUserBiz {
 }
 
 func sendMailRequest(email, password string) {
-	url := "http://13.54.238.78/api/v1/mail/send"
+	url := "http://shopbee-api.shop/api/v1/mail/send"
 	type Mail struct {
 		Receiver string `json:"receiver"`
 		Subject  string `json:"subject"`
