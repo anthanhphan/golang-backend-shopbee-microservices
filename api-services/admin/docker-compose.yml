@@ -2,8 +2,8 @@ version: '2'
 
 services:
   web-service:
-    container_name: shopbee-api
+    container_name: admin-service
     build: .
-    image: shopbee-api:0.0.1
+    image: admin-service:0.0.1
     ports:
-      - "3055:3055"
+      - "3010:3010"

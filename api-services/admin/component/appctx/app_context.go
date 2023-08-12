@@ -7,7 +7,6 @@ import (
 type AppContext interface {
 	GetMainDBConnection() *gorm.DB
 	GetSecretKey() string
-	//NewTokenConfig() TokenConfig
 }
 
 type appCtx struct {
