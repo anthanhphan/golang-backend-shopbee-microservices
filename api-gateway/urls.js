@@ -6,6 +6,7 @@ const urls = [
     "http://shopbee-api.shop:8080/discover/mail",
     "http://shopbee-api.shop:8080/discover/request",
     "http://shopbee-api.shop:8080/discover/wishlist",
+    "http://shopbee-api.shop:8080/discover/cart",
 ];
 
 module.exports = urls;
