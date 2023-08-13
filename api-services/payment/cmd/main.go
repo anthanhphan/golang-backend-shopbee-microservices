@@ -42,7 +42,7 @@ func init() {
 		fmt.Println("DB DSN:", DSN)
 	}
 
-	common.RegisDiscovery("order", PORT)
+	common.RegisDiscovery("payment", PORT)
 	DB = dbconn.ConnectDB(DSN)
 	DB = DB.Debug()
 }
@@ -59,7 +59,7 @@ func main() {
 		},
 	))
 
-	route.CartRouterInit(router, appCtx)
+	route.PaymentRouterInit(router, appCtx)
 	if err := router.Run(":" + PORT); err != nil {
 		log.Fatalln(err.Error())
 	}
