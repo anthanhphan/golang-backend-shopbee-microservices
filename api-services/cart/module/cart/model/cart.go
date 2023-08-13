@@ -16,11 +16,22 @@ func (Cart) TableName() string {
 }
 
 type CartCreate struct {
-	UserId          int `json:"user_id" gorm:"column:user_id;"`
+	UserId          int `json:"-" gorm:"column:user_id;"`
 	ProductId       int `json:"product_id" gorm:"column:product_id;"`
 	ProductQuantity int `json:"quantity" gorm:"column:product_quantity;"`
 }
 
 func (CartCreate) TableName() string {
+	return "carts"
+}
+
+type CartUpdate struct {
+	UserId          int    `json:"-" gorm:"column:user_id;"`
+	ProductId       int    `json:"-" gorm:"column:product_id;"`
+	ProductUID      string `json:"product_id" gorm:"-"`
+	ProductQuantity int    `json:"quantity" gorm:"column:product_quantity;"`
+}
+
+func (CartUpdate) TableName() string {
 	return "carts"
 }
