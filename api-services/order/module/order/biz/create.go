@@ -15,7 +15,7 @@ type CreateOrderStorage interface {
 	CreateOderDetail(
 		ctx context.Context,
 		orderId int,
-		data []map[string]interface{},
+		data []common.Product,
 	) error
 }
 
@@ -37,7 +37,7 @@ func NewCreateOrderBiz(
 func (biz *createOrderBiz) CreateOrder(
 	ctx context.Context,
 	data *ordermodel.Order,
-	productList []map[string]interface{},
+	productList common.Products,
 ) error {
 	id, err := biz.store.CreateOder(ctx, data)
 	if err != nil {

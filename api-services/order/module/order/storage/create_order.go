@@ -2,7 +2,6 @@ package orderstorage
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"shopbee/common"
 	ordermodel "shopbee/module/order/model"
@@ -24,17 +23,16 @@ func (s *orderMySql) CreateOder(
 func (s *orderMySql) CreateOderDetail(
 	ctx context.Context,
 	orderId int,
-	data []map[string]interface{},
+	data []common.Product,
 ) error {
 
 	db := s.db.Table(ordermodel.OrderDetail{}.TableName())
 
 	for i := range data {
-		jsonStr, _ := json.Marshal(data[i])
 
 		orderDetail := ordermodel.OrderDetail{
 			OrderId:       orderId,
-			ProductOrigin: jsonStr,
+			ProductOrigin: &data[i],
 		}
 		fmt.Println(orderDetail)
 		if err := db.Create(&orderDetail).Error; err != nil {
