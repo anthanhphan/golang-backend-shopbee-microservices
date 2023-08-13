@@ -17,13 +17,6 @@ func (s *orderMySql) CreateOder(
 		return 0, common.ErrDB(err)
 	}
 
-	if err := s.db.Table("carts").
-		Joins("JOIN products ON carts.product_id = products.id").
-		Where("user_id = ? AND products.shop_id = ?", data.UserId, data.ShopId).
-		Delete(&data).Error; err != nil {
-		return 0, common.ErrDB(err)
-	}
-
 	return data.Id, nil
 }
 
