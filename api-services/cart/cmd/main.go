@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"shopbee/common"
 	"shopbee/component/appctx"
 	dbconn "shopbee/database"
 	"shopbee/middleware"
@@ -41,7 +42,7 @@ func init() {
 		fmt.Println("DB DSN:", DSN)
 	}
 
-	// common.RegisDiscovery("cart", PORT)
+	common.RegisDiscovery("cart", PORT)
 	DB = dbconn.ConnectDB(DSN)
 	DB = DB.Debug()
 }
