@@ -6,7 +6,7 @@ import (
 )
 
 type ViewProductStorage interface {
-	ViewProduct(
+	FindProduct(
 		context context.Context,
 		id int,
 		moreKey ...string,
@@ -28,7 +28,7 @@ func (biz *viewProductBiz) ViewProduct(
 	id int,
 	moreKey ...string,
 ) (*productmodel.Product, error) {
-	product, err := biz.store.ViewProduct(ctx, id, "Shop", "Category")
+	product, err := biz.store.FindProduct(ctx, id, "Shop", "Category")
 
 	if err != nil {
 		return nil, err

@@ -1,4 +1,4 @@
--- Active: 1689318590192@@20.205.213.44@3306
+-- Active: 1691472943542@@20.205.213.44@3306@shopbee
 -- DROP DATABASE --
 DROP DATABASE IF EXISTS `shopbee`;
 
@@ -40,6 +40,8 @@ CREATE TABLE `users` (
     `email` VARCHAR(50) UNIQUE NOT NULL,
     `fullname` VARCHAR(50) NOT NULL,
     `password` VARCHAR(50) NOT NULL,
+    `salt` VARCHAR(50),
+    `addr` VARCHAR(200),
     `phone` VARCHAR(20) UNIQUE,
     `role` ENUM (
         'buyer',
@@ -47,9 +49,13 @@ CREATE TABLE `users` (
         'admin',
         'moderator'
     ) NOT NULL DEFAULT "buyer",
-    `avatar` JSON,
-    `salt` VARCHAR(50),
-    `addr` VARCHAR(200),
+    `avatar` JSON DEFAULT(
+        '{"url": "http://d1851nciml9u0m.cloudfront.net/user/default-1691832193326062897.png",
+        "width": 860,
+        "height": 900,
+        "cloud_name": "s3",
+        "extension": ".png" }'
+    ),
     `status` INT NOT NULL DEFAULT 1,
     `created_at` TIMESTAMP DEFAULT (CURRENT_TIMESTAMP),
     `updated_at` TIMESTAMP DEFAULT (CURRENT_TIMESTAMP)
@@ -117,6 +123,7 @@ CREATE TABLE `carts` (
 
 CREATE TABLE `payments` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `user_id` INT NOT NULL,
     `payment_status` ENUM ('paid', 'pending') NOT NULL DEFAULT "pending",
     `payment_method` ENUM ('cod', 'card') NOT NULL DEFAULT "cod",
     `amount` FLOAT NOT NULL,
@@ -145,7 +152,7 @@ CREATE TABLE `orders` (
 CREATE TABLE `order_details` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `order_id` INT NOT NULL,
-    `product_id` INT NOT NULL,
+    `product_origin` JSON NOT NULL,
     `quantity` INT NOT NULL,
     `unit_price` FLOAT NOT NULL,
     `status` INT NOT NULL DEFAULT 1,
@@ -271,6 +278,11 @@ ADD
     FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`);
 
 ALTER TABLE
+    `payments`
+ADD
+    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+ALTER TABLE
     `request_upgrades`
 ADD
     FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
@@ -287,56 +299,63 @@ ADD
 
 -- USER DATA INSERT --
 INSERT INTO
-    `users` (
-        id,
-        email,
-        fullname,
-        password,
-        phone,
-        role,
-        salt,
-        addr
-    )
+    `users`
 VALUES
     (
         1,
         'ptan21@clc.fitus.edu.vn',
         'Phan Thanh An',
-        'e45b0809fc62d75697fb01929de8cffb',
+        '2ef5a37dbe517c9d4dd2b246e8ff37d3',
+        'oTAAdyawGUcHuyHWKCUjlzpfxfLvULDzQSWAxJpLzXxDuEqKCj',
+        '227 Nguyễn Văn Cừ, P4, Q5, TP.HCM',
         '0325364474',
         'admin',
-        'ChzFqomjOSSwdChbQVFTqqBnQrwUGfqFDDFgCdILGAQHfLbmfF',
-        '227 Nguyễn Văn Cừ, P4, Q5, TP.HCM'
+        '{\"url\": \"http://d1851nciml9u0m.cloudfront.net/user/default-1691832193326062897.png\", \"width\": 860, \"height\": 900, \"extension\": \".png\", \"cloud_name\": \"s3\"}',
+        1,
+        '2023-08-12 18:22:11',
+        '2023-08-12 18:22:11'
     ),
     (
         2,
         'nhhuu21@clc.fitus.edu.vn',
         'Nguyễn Hi Hữu',
-        'e45b0809fc62d75697fb01929de8cffb',
+        '2ef5a37dbe517c9d4dd2b246e8ff37d3',
+        'oTAAdyawGUcHuyHWKCUjlzpfxfLvULDzQSWAxJpLzXxDuEqKCj',
+        '227 Nguyễn Văn Cừ, P4, Q5, TP.HCM',
         '0325364475',
         'admin',
-        'ChzFqomjOSSwdChbQVFTqqBnQrwUGfqFDDFgCdILGAQHfLbmfF',
-        '227 Nguyễn Văn Cừ, P4, Q5, TP.HCM'
+        '{\"url\": \"http://d1851nciml9u0m.cloudfront.net/user/default-1691832193326062897.png\", \"width\": 860, \"height\": 900, \"extension\": \".png\", \"cloud_name\": \"s3\"}',
+        1,
+        '2023-08-12 18:22:11',
+        '2023-08-12 18:22:11'
     ),
     (
         3,
         'phgbao21@clc.fitus.edu.vn',
         'Phạm Hồng Gia Bảo',
-        'e45b0809fc62d75697fb01929de8cffb',
+        '2ef5a37dbe517c9d4dd2b246e8ff37d3',
+        'oTAAdyawGUcHuyHWKCUjlzpfxfLvULDzQSWAxJpLzXxDuEqKCj',
+        '227 Nguyễn Văn Cừ, P4, Q5, TP.HCM',
         '0325364476',
         'admin',
-        'ChzFqomjOSSwdChbQVFTqqBnQrwUGfqFDDFgCdILGAQHfLbmfF',
-        '227 Nguyễn Văn Cừ, P4, Q5, TP.HCM'
+        '{\"url\": \"http://d1851nciml9u0m.cloudfront.net/user/default-1691832193326062897.png\", \"width\": 860, \"height\": 900, \"extension\": \".png\", \"cloud_name\": \"s3\"}',
+        1,
+        '2023-08-12 18:22:11',
+        '2023-08-12 18:22:11'
     ),
     (
         4,
         'ntthuan20@clc.fitus.edu.vn',
         'Nguyễn Thành Thuuận',
-        'e45b0809fc62d75697fb01929de8cffb',
+        '2ef5a37dbe517c9d4dd2b246e8ff37d3',
+        'oTAAdyawGUcHuyHWKCUjlzpfxfLvULDzQSWAxJpLzXxDuEqKCj',
+        '227 Nguyễn Văn Cừ, P4, Q5, TP.HCM',
         '0325364478',
         'admin',
-        'ChzFqomjOSSwdChbQVFTqqBnQrwUGfqFDDFgCdILGAQHfLbmfF',
-        '227 Nguyễn Văn Cừ, P4, Q5, TP.HCM'
+        '{\"url\": \"http://d1851nciml9u0m.cloudfront.net/user/default-1691832193326062897.png\", \"width\": 860, \"height\": 900, \"extension\": \".png\", \"cloud_name\": \"s3\"}',
+        1,
+        '2023-08-12 18:22:11',
+        '2023-08-12 18:22:11'
     );
 
 -- CATEGORY DATA INSERT --

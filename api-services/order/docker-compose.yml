@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  web-service:
+    container_name: order-service
+    build: .
+    image: order-service:0.0.1
+    ports:
+      - "3008:3008"

@@ -5,7 +5,7 @@ import (
 	productmodel "shopbee/module/product/model"
 )
 
-func (s *productMySql) ViewProduct(
+func (s *productMySql) FindProduct(
 	context context.Context,
 	id int,
 	moreKey ...string,

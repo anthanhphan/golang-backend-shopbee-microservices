@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  web-service:
+    container_name: payment-service
+    build: .
+    image: payment-service:0.0.1
+    ports:
+      - "3009:3009"

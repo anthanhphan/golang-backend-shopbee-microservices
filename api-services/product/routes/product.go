@@ -15,5 +15,6 @@ func ProductRouterInit(router *gin.Engine, appCtx appctx.AppContext) {
 		productApi.POST("/create", middleware.RequireAuth(appCtx), producttransport.CreateProduct(appCtx))
 		productApi.GET("/list", producttransport.ListProduct(appCtx))
 		productApi.GET("/view/:id", producttransport.ViewProduct(appCtx))
+		productApi.DELETE("/:id", producttransport.RemoveProduct(appCtx))
 	}
 }
