@@ -39,7 +39,7 @@ func (s *cartMySql) ViewMyCart(
 		}
 
 		if _, ok := shopData[shopID]; !ok {
-			totalPrice += productPrice
+			totalPrice += (productPrice * productQuantity)
 
 			shopData[shopID] = map[string]interface{}{
 				"shop_id":          shopID,
