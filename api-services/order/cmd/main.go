@@ -59,7 +59,7 @@ func main() {
 		},
 	))
 
-	route.CartRouterInit(router, appCtx)
+	route.OrderRouterInit(router, appCtx)
 	if err := router.Run(":" + PORT); err != nil {
 		log.Fatalln(err.Error())
 	}
