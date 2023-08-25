@@ -12,25 +12,8 @@ func (s *productMySql) RemoveProduct(
 ) error {
 	db := s.db
 
-	// Remove all product are in wishlist
-	var wishlists interface{}
-	if err := db.
-		Table("wishlists").
-		Where("product_id = ?", productId).
-		Delete(&wishlists).
-		Error; err != nil {
-		return common.ErrDB(err)
-	}
-
-	// Remove all product are in cart
-	var cart interface{}
-	if err := db.
-		Table("carts").
-		Where("product_id = ?", productId).
-		Delete(&cart).
-		Error; err != nil {
-		return common.ErrDB(err)
-	}
+	db.Exec("DELETE FROM wishlists WHERE product_id = ?", productId)
+	db.Exec("DELETE FROM carts WHERE product_id = ?", productId)
 
 	// Remove product
 	if err := db.
