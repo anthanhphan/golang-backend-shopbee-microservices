@@ -20,7 +20,7 @@ func UserRouterInit(router *gin.Engine, appCtx appctx.AppContext) {
 		userApi.GET("/like/:id", middleware.RequireAuth(appCtx), usertransport.CountLikeShop(appCtx))
 
 		userApi.POST("/like/:id", middleware.RequireAuth(appCtx), usertransport.LikeShop(appCtx))
-		userApi.POST("/dislike/:id", middleware.RequireAuth(appCtx), usertransport.LikeShop(appCtx))
+		userApi.POST("/dislike/:id", middleware.RequireAuth(appCtx), usertransport.DislikeShop(appCtx))
 
 		userApi.POST("/register", usertransport.Register(appCtx))
 		userApi.POST("/authenticate", usertransport.Login(appCtx))
