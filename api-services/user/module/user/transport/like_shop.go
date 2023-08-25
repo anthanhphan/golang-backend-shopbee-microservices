@@ -84,3 +84,24 @@ func IsLikedShop(appCtx appctx.AppContext) gin.HandlerFunc {
 		c.JSON(http.StatusOK, common.SimpleSucessResponse(true))
 	}
 }
+
+func CountLikeShop(appCtx appctx.AppContext) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		requester := c.MustGet(common.CurrentUser).(common.Requester)
+		db := appCtx.GetMainDBConnection()
+
+		uid, err := common.FromBase58(c.Param("id"))
+
+		if err != nil {
+			panic(common.ErrInvalidRequest(err))
+		}
+
+		store := userstorage.NewSQLStore(db)
+		biz := userbiz.NewLikeShopBiz(store, requester)
+
+		count := biz.CountLikeShop(c.Request.Context(), int(uid.GetLocalID()))
+		c.JSON(http.StatusOK, gin.H{
+			"like": count,
+		})
+	}
+}

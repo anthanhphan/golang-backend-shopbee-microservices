@@ -63,3 +63,19 @@ func (s *userMySql) IsLiked(
 
 	return false
 }
+
+func (s *userMySql) CountLike(
+	ctx context.Context,
+	shopId int,
+) int {
+	db := s.db.Table("shop_follows")
+	db = db.Where("shop_id = ?", shopId)
+
+	var likeCount int64
+
+	if err := db.Count(&likeCount).Error; err != nil {
+		return 0
+	}
+
+	return int(likeCount)
+}

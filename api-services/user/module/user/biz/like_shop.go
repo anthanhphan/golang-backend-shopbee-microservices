@@ -23,6 +23,11 @@ type LikeShopStorage interface {
 		userId int,
 		shopId int,
 	) bool
+
+	CountLike(
+		ctx context.Context,
+		shopId int,
+	) int
 }
 
 type likeShopBiz struct {
@@ -75,4 +80,13 @@ func (biz *likeShopBiz) IsLikedShop(
 	}
 
 	return true
+}
+
+func (biz *likeShopBiz) CountLikeShop(
+	ctx context.Context,
+	shopId int,
+) int {
+	count := biz.store.CountLike(ctx, shopId)
+
+	return count
 }
