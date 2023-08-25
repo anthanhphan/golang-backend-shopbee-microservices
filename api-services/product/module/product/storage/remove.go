@@ -12,7 +12,7 @@ func (s *productMySql) RemoveProduct(
 ) error {
 	db := s.db
 
-	db.Exec("DELETE FROM wishlists WHERE product_id = ?", productId)
+	db.Exec("DELETE FROM wish_lists WHERE product_id = ?", productId)
 	db.Exec("DELETE FROM carts WHERE product_id = ?", productId)
 
 	// Remove product
