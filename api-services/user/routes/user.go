@@ -20,6 +20,8 @@ func UserRouterInit(router *gin.Engine, appCtx appctx.AppContext) {
 		userApi.POST("/register", usertransport.Register(appCtx))
 		userApi.POST("/authenticate", usertransport.Login(appCtx))
 		userApi.POST("/forgotpw", usertransport.ForgotPassword(appCtx))
+		userApi.POST("/changepw", middleware.RequireAuth(appCtx), usertransport.ChangePassword(appCtx))
+
 		userApi.POST("/upgrade", middleware.RequireAuth(appCtx), reqtransport.CreateRequestUpgrade(appCtx))
 		userApi.POST("/report", middleware.RequireAuth(appCtx), reqtransport.CreateRequestBanUser(appCtx))
 
