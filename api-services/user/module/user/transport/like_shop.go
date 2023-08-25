@@ -1,6 +1,7 @@
 package usertransport
 
 import (
+	"errors"
 	"net/http"
 	"shopbee/common"
 	"shopbee/component/appctx"
@@ -78,7 +79,7 @@ func IsLikedShop(appCtx appctx.AppContext) gin.HandlerFunc {
 			c.Request.Context(),
 			requester.GetUserId(),
 			int(uid.GetLocalID())); !err {
-			panic(err)
+			panic(errors.New("not like"))
 		}
 
 		c.JSON(http.StatusOK, common.SimpleSucessResponse(true))

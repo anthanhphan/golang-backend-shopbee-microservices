@@ -61,7 +61,7 @@ func (s *userMySql) IsLiked(
 		return false
 	}
 
-	return false
+	return true
 }
 
 func (s *userMySql) CountLike(
