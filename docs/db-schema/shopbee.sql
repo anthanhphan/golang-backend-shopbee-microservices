@@ -1,4 +1,4 @@
--- Active: 1691472943542@@20.205.213.44@3306@shopbee
+-- Active: 1691472943542@@20.205.213.44@3306
 -- DROP DATABASE --
 DROP DATABASE IF EXISTS `shopbee`;
 
@@ -135,6 +135,7 @@ CREATE TABLE `payments` (
 CREATE TABLE `orders` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `user_id` INT NOT NULL,
+    `shop_id` INT NOT NULL,
     `payment_id` INT NOT NULL,
     `total_price` FLOAT NOT NULL,
     `shipping_addr` VARCHAR(200) NOT NULL,
@@ -153,8 +154,6 @@ CREATE TABLE `order_details` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `order_id` INT NOT NULL,
     `product_origin` JSON NOT NULL,
-    `quantity` INT NOT NULL,
-    `unit_price` FLOAT NOT NULL,
     `status` INT NOT NULL DEFAULT 1,
     `created_at` TIMESTAMP DEFAULT (CURRENT_TIMESTAMP),
     `updated_at` TIMESTAMP DEFAULT (CURRENT_TIMESTAMP)
