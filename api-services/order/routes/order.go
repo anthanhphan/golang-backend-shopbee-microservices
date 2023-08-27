@@ -17,7 +17,7 @@ func OrderRouterInit(router *gin.Engine, appCtx appctx.AppContext) {
 		orderApi.GET("/:id", middleware.RequireAuth(appCtx), ordertransport.ViewOrderDetail(appCtx))
 
 		orderApi.GET("/shop/list", middleware.RequireAuth(appCtx), ordertransport.ViewShopOrder(appCtx))
-		orderApi.GET("/shop/:id", middleware.RequireAuth(appCtx), ordertransport.ViewShopOrderDetail(appCtx))
+		orderApi.GET("", middleware.RequireAuth(appCtx), ordertransport.ViewShopOrderDetail(appCtx))
 		orderApi.PATCH("/shop/:id/:status", middleware.RequireAuth(appCtx), ordertransport.ChangeOrderStatus(appCtx))
 	}
 }

@@ -13,7 +13,7 @@ func (s *orderMySql) ViewShopOrder(
 
 	db := s.db.Table(ordermodel.Order{}.TableName())
 
-	db.Preload("Buyer")
+	// db.Preload("Buyer")
 
 	if err := db.Where("shop_id = ?", shopId).Find(&result).Error; err != nil {
 		return nil, err
