@@ -4,12 +4,13 @@ import "shopbee/common"
 
 type Order struct {
 	common.SQLModel `json:",inline"`
-	UserId          int    `json:"-" gorm:"column:user_id;"`
-	ShopId          int    `json:"shop_id" gorm:"column:shop_id"`
-	TotalPrice      int    `json:"total_price" gorm:"column:total_price"`
-	PaymentId       int    `json:"payment_id" gorm:"column:payment_id;"`
-	ShippingAddr    string `json:"shipping_addr" gorm:"column:shipping_addr;"`
-	OrderStatus     string `json:"order_status" gorm:"column:order_status;default:pending"`
+	UserId          int              `json:"-" gorm:"column:user_id;"`
+	ShopId          int              `json:"shop_id" gorm:"column:shop_id"`
+	TotalPrice      int              `json:"total_price" gorm:"column:total_price"`
+	PaymentId       int              `json:"payment_id" gorm:"column:payment_id;"`
+	ShippingAddr    string           `json:"shipping_addr" gorm:"column:shipping_addr;"`
+	OrderStatus     string           `json:"order_status" gorm:"column:order_status;default:pending"`
+	Buyer           *common.SQLModel `json:"buyer" gorm:"preload:false;foreignKey:UserId;references:Id;"`
 }
 
 func (Order) TableName() string {
