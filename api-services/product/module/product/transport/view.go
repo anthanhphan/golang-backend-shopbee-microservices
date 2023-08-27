@@ -28,6 +28,8 @@ func ViewProduct(appCtx appctx.AppContext) gin.HandlerFunc {
 			panic(err)
 		}
 
+		result.Mask(false)
+
 		c.JSON(http.StatusOK, common.SimpleSucessResponse(result))
 	}
 }
